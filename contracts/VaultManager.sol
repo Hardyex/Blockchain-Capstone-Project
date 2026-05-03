@@ -28,7 +28,10 @@ contract VaultManager is Ownable, Pausable {
         feeReceiver = _newReceiver;
     }
 
-    function requestInterest(address _to, uint256 _amount) external onlySavingCore whenNotPaused returns (bool) {
+    function requestInterest(
+        address _to,
+        uint256 _amount
+    ) external onlySavingCore whenNotPaused returns (bool) {
         if (usdc.balanceOf(address(this)) < _amount) {
             return false;
         }
@@ -40,10 +43,18 @@ contract VaultManager is Ownable, Pausable {
         uint256 balance = usdc.balanceOf(address(this));
         // Safety limit mechanism: Admin can only withdraw a maximum of 90% of the current balance
         // The remaining 10% is always kept to ensure immediate interest payment capacity
-        require(_amount <= (balance * 90) / 100, "Vault: Exceeds safety buffer");
+        require(
+            _amount <= (balance * 90) / 100,
+            "Vault: Exceeds safety buffer"
+        );
         usdc.transfer(_to, _amount);
     }
 
-    function pause() external onlyOwner { _pause(); }
-    function unpause() external onlyOwner { _unpause(); }
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
+    }
 }

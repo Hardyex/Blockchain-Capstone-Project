@@ -232,7 +232,7 @@ contract SavingCore is ERC721, Ownable {
     }
 
     // --- Plan Management (CRUD) ---
-
+    
     function updatePlan(
         uint256 _planId, 
         uint256 _tenor, 
