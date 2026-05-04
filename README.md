@@ -95,7 +95,7 @@ sequenceDiagram
     end
     
     SC-->>User: Transaction Confirmed
-
+```
 
 ## 📡 Event-Driven Design
 
