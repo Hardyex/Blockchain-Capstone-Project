@@ -62,7 +62,7 @@ The protocol follows a decoupled architecture to enforce trust boundaries and mi
 2. **Trust Boundaries**: `VaultManager` exposes a restricted `requestInterest` function, accessible only via the `onlySavingCore` modifier.
 3. **Liquidity Isolation**: Principal is siloed in `SavingCore`. Interest is managed by `VaultManager`. This prevents a compromise in yield logic from affecting the safety of the underlying principal.
 
-
+```mermaid
 sequenceDiagram
     autonumber
     actor User
