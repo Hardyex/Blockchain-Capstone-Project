@@ -7,10 +7,14 @@
   <img src="https://img.shields.io/badge/React-19-ff69b4?style=for-the-badge&logo=react" />
   <img src="https://img.shields.io/badge/Solidity-0.8.24-9b59b6?style=for-the-badge&logo=solidity" />
   <img src="https://img.shields.io/badge/Hardhat-Project-ff69b4?style=for-the-badge&logo=hardhat" />
+  <img src="https://img.shields.io/badge/TailwindCSS-ff69b4?style=for-the-badge&logo=tailwind-css" />
+  <img src="https://img.shields.io/badge/Vite-Project-ff69b4?style=for-the-badge&logo=vite" />
   <br />
-  <img src="https://img.shields.io/badge/License-MIT-9b59b6?style=flat-square" />
   <img src="https://img.shields.io/badge/Coverage-100%25-ff69b4?style=flat-square" />
   <img src="https://img.shields.io/badge/Network-Sepolia-9b59b6?style=flat-square" />
+  <img src="https://img.shields.io/badge/License-MIT-9b59b6?style=flat-square" />
+  <img src="https://img.shields.io/badge/RainbowKit-1-ff69b4?style=flat-square&logo=rainbowkit" />
+
 </p>
 
 ---
