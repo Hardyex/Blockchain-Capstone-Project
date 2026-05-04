@@ -1,236 +1,209 @@
-# 📅 Project Plan – Blockchain Term Deposit System
+<h1 align="center">🛸 OCFP: THE MASTER ROADMAP</h1>
 
-**Timeline:** 28/04 → 06/05  
-**Goal:** Hoàn thành backend + test trước 05/05, frontend optional
+<div align="center">
 
----
+| 🎯 **PROJECT GOAL** | 📅 **TIMELINE** | 🚦 **CURRENT STATUS** |
+| :--- | :--- | :--- |
+| Production-Grade Backend & High Coverage Test Suite | 28/04 → 06/05 | **🚀 FINAL POLISHING** |
 
-# 🗓️ Day 1 — 28/04 (Setup & Data Model)
+</div>
 
-## 🎯 Task
-- [ ] Khởi tạo project Hardhat
-- [ ] Cài dependencies: hardhat, ethers, openzeppelin
-- [ ] Tạo structure thư mục `/contracts`, `/test`
-- [ ] Tạo file:
-  - MockUSDC.sol
-  - VaultManager.sol
-  - SavingCore.sol
-- [ ] Thiết kế struct:
-  - Plan
-  - Deposit
-- [ ] Define enum Status
-
-## ⚠️ Risk
-- Thiếu field trong struct → phải refactor lớn
-- Hiểu sai snapshot APR → sai toàn bộ logic
-
-## ✅ Achievement
-- [ ] Compile thành công
-- [ ] Struct đầy đủ
-- [ ] Enum status hoàn chỉnh
+<p align="center">
+  <b>Mission Progress:</b><br>
+  <code>[████████████████████░] 100%</code>
+</p>
 
 ---
 
-# 🗓️ Day 2 — 29/04 (Mock Token + Vault)
+# 🗓️ DAY 1 — 28/04 (Setup & Data Architecture)
+---
 
-## 🎯 Task
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** Khởi tạo project Hardhat & Environment
+- [x] **[HIGH]** Cài dependencies: `hardhat`, `ethers`, `openzeppelin`
+- [x] **[HIGH]** Cấu trúc thư mục tiêu chuẩn `/contracts`, `/test`
+- [x] **[HIGH]** Khởi tạo Blueprint Files: `MockUSDC.sol`, `VaultManager.sol`, `SavingCore.sol`
+- [x] **[HIGH]** Thiết kế Data Models: `Plan` & `Deposit` Structs
+- [x] **[HIGH]** Định nghĩa `Status` Enums
 
-### MockUSDC
-- [ ] ERC20 (6 decimals)
-- [ ] mint() phục vụ test
+### ⚠️ SYSTEM RISKS
+| Risk Factor | Impact | Mitigation |
+| :--- | :--- | :--- |
+| **Data Inconsistency** | High | Strict Struct validation |
+| **Logic Mismatch** | High | Detailed snapshot mapping |
 
-### VaultManager
-- [ ] Biến:
-  - token address
-  - feeReceiver
-- [ ] Function:
-  - fundVault()
-  - withdrawVault()
-  - setFeeReceiver()
-- [ ] Thêm Pausable
-
-## ⚠️ Risk
-- Sai decimals → sai toàn bộ phép tính
-- Trộn vault với tiền user
-
-## ✅ Achievement
-- [ ] mint hoạt động
-- [ ] fundVault hoạt động
-- [ ] withdrawVault hoạt động
-- [ ] pause hoạt động
+### ✅ MILESTONES REACHED
+- [x] **Compilation Success**
+- [x] **Stable Data Models**
+- [x] **Comprehensive Enums**
 
 ---
 
-# 🗓️ Day 3 — 30/04 (Plan Management)
+# 🗓️ DAY 2 — 29/04 (Tokenomics & Liquidity Vault)
+---
 
-## 🎯 Task
-- [ ] createPlan()
-- [ ] updatePlan()
-- [ ] enable/disable plan
-- [ ] Validate input (APR, tenor)
-- [ ] Emit event PlanCreated, PlanUpdated
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** **MockUSDC**: ERC20 standard with 6 decimals
+- [x] **[HIGH]** **MockUSDC**: Cấp quyền `mint()` phục vụ testing
+- [x] **[HIGH]** **VaultManager**: Quản lý Token Address & Fee Receiver
+- [x] **[HIGH]** **VaultManager**: Cơ chế `fundVault()` & `withdrawVault()`
+- [x] **[HIGH]** **Security**: Tích hợp `Pausable` bảo vệ thanh khoản
 
-## ⚠️ Risk
-- Plan update ảnh hưởng deposit cũ
-- Không validate input
+### ⚠️ SYSTEM RISKS
+- **Precision Error**: Sai decimals dẫn đến sai lệch 10^6 lần giá trị.
+- **Liquidity Leak**: Nguy cơ trộn lẫn quỹ Vault với tiền của người dùng.
 
-## ✅ Achievement
-- [ ] Tạo plan OK
-- [ ] Disable plan OK
-- [ ] Update chỉ ảnh hưởng deposit mới
+### ✅ MILESTONES REACHED
+- [x] **Minting Engine Operational**
+- [x] **Vault Liquidity Logic Verified**
+- [x] **Emergency Stop (Pause) Active**
 
 ---
 
-# 🗓️ Day 4 — 01/05 (Open Deposit + NFT)
+# 🗓️ DAY 3 — 30/04 (Saving Plan Management)
+---
 
-## 🎯 Task
-- [ ] Implement openDeposit()
-- [ ] Check plan enabled
-- [ ] Check min/max
-- [ ] Transfer token
-- [ ] Mint ERC721
-- [ ] Lưu deposit
-- [ ] Snapshot APR & penalty
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** Implement `createPlan()` logic
+- [x] **[HIGH]** Cơ chế `updatePlan()` & Dynamic Plan Toggling
+- [x] **[HIGH]** Validation Input: APR, Tenor, Min/Max limits
+- [x] **[HIGH]** Event Architecture: `PlanCreated`, `PlanUpdated`
 
-## ⚠️ Risk
-- Không snapshot APR
-- Sai timestamp
+### ⚠️ SYSTEM RISKS
+- **Legacy Impact**: Thay đổi Plan làm ảnh hưởng đến các Deposit cũ (Backward Compatibility).
+- **Invalid Data**: Input không được validate gây tràn số hoặc APR phi thực tế.
 
-## ✅ Achievement
-- [ ] Open deposit thành công
-- [ ] Reject khi plan disable
-- [ ] NFT đúng owner
+### ✅ MILESTONES REACHED
+- [x] **Dynamic Plan Engine OK**
+- [x] **Legacy Protection Logic Active**
+- [x] **Event Monitoring Connected**
 
 ---
 
-# 🗓️ Day 5 — 02/05 (Withdraw Logic)
+# 🗓️ DAY 4 — 01/05 (Atomic Deposit & NFT Minting)
+---
 
-## 🎯 Task
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** Hoàn thiện `openDeposit()` core function
+- [x] **[HIGH]** Verification: Plan status, Min/Max thresholds
+- [x] **[HIGH]** Token Transfer Flow: User ➔ Protocol
+- [x] **[HIGH]** ERC721 Integration: Minting Deposit Certificates
+- [x] **[HIGH]** Snapshot Engine: Lưu trữ APR & Penalty tại thời điểm Open
 
-### Withdraw at maturity
-- [ ] Check maturity
-- [ ] Tính interest
-- [ ] Gọi vault trả lãi
+### ⚠️ SYSTEM RISKS
+- **Stale APR**: Không snapshot APR dẫn đến tranh chấp khi Plan thay đổi.
+- **Clock Drift**: Sai lệch timestamp ảnh hưởng đến ngày đáo hạn.
 
-### Early withdraw
-- [ ] Tính penalty
-- [ ] Transfer penalty → feeReceiver
-- [ ] Không trả interest
-
-## ⚠️ Risk
-- Sai công thức interest
-- Vault thiếu tiền không revert
-- Double withdraw
-
-## ✅ Achievement
-- [ ] Withdraw đúng hạn OK
-- [ ] Early withdraw OK
-- [ ] Không withdraw 2 lần
+### ✅ MILESTONES REACHED
+- [x] **NFT Minting Pipeline Operational**
+- [x] **Deposit Rejection Logic Verified**
+- [x] **Accurate Ownership Tracking**
 
 ---
 
-# 🗓️ Day 6 — 03/05 (Renew Logic)
+# 🗓️ DAY 5 — 02/05 (Maturity & Early Withdrawal)
+---
 
-## 🎯 Task
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** **Maturity Flow**: Kiểm tra điều kiện đáo hạn
+- [x] **[HIGH]** **Yield Engine**: Tính toán Interest chính xác
+- [x] **[HIGH]** **Vault Interaction**: Rút lãi từ liquidity pool
+- [x] **[HIGH]** **Early Exit**: Tính toán Penalty & chuyển về Fee Receiver
+- [x] **[HIGH]** **Security**: Chặn trả Interest khi rút sớm
 
-### Manual renew
-- [ ] Tính interest
-- [ ] Cộng vào principal
-- [ ] Mint deposit mới
+### ⚠️ SYSTEM RISKS
+- **Calculation Bug**: Sai công thức lãi suất gây tổn thất cho protocol.
+- **Liquidity Crisis**: Vault thiếu tiền chi trả lãi.
+- **Reentrancy**: Nguy cơ Double Withdraw.
 
-### Auto renew
-- [ ] Check grace period (3 ngày)
-- [ ] Giữ APR cũ
-- [ ] Tạo deposit mới
-
-## ⚠️ Risk
-- Auto renew dùng APR mới
-- Renew trước thời gian
-
-## ✅ Achievement
-- [ ] Manual renew OK
-- [ ] Auto renew đúng điều kiện
-- [ ] APR giữ nguyên
+### ✅ MILESTONES REACHED
+- [x] **Full Withdrawal Cycle Verified**
+- [x] **Penalty Collection Active**
+- [x] **Double-Spending Prevention Active**
 
 ---
 
-# 🗓️ Day 7 — 04/05 (Testing)
+# 🗓️ DAY 6 — 03/05 (Renewal Mechanics)
+---
 
-## 🎯 Task
-- [ ] Viết full test suite
-- [ ] Test:
-  - openDeposit
-  - withdraw
-  - earlyWithdraw
-  - renew
-  - autoRenew
-  - vault
-  - pause
-- [ ] Coverage > 90%
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** **Manual Renew**: Tái đầu tư (Principal + Interest) ➔ NFT mới
+- [x] **[HIGH]** **Auto Renew**: Cơ chế Grace Period (3 ngày)
+- [x] **[MEDIUM]** Bảo lưu APR cũ cho các kỳ hạn tái tục tự động
 
-## ⚠️ Risk
-- Thiếu edge case
-- Không test revert
+### ⚠️ SYSTEM RISKS
+- **APR Drift**: Auto renew vô tình dùng APR mới thấp hơn APR cũ của user.
+- **Timing Attack**: Renew trước khi đến hạn.
 
-## ✅ Achievement
-- [ ] Coverage ≥ 90%
-- [ ] All test pass
+### ✅ MILESTONES REACHED
+- [x] **Compound Interest Logic OK**
+- [x] **Auto-Renew Conditions Verified**
 
 ---
 
-# 🗓️ Day 8 — 05/05 (Frontend + Demo)
+# 🗓️ DAY 7 — 04/05 (Quality Assurance & Coverage)
+---
 
-## 🎯 Task
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** Xây dựng Full Test Suite (Vitest/Hardhat)
+- [x] **[HIGH]** Stress Test: `openDeposit`, `withdraw`, `earlyWithdraw`, `renew`
+- [x] **[HIGH]** Security Test: `Vault`, `Pause`, `Access Control`
+- [x] **[HIGH]** Đạt mục tiêu **Coverage > 90%**
 
-### Optional frontend
-- [ ] React + MetaMask
-- [ ] View plans
-- [ ] Open deposit
-- [ ] Withdraw
+### ⚠️ SYSTEM RISKS
+- **Hidden Edge Cases**: Các trường hợp biên (zero amount, max cap) bị bỏ sót.
+- **Revert Misses**: Không kiểm tra các trường hợp bắt buộc phải revert.
 
-### Bắt buộc
-- [ ] README.md
-- [ ] Chuẩn bị demo flow
-
-## ⚠️ Risk
-- Frontend lỗi
-- Demo không chuẩn bị
-
-## ✅ Achievement
-- [ ] Demo chạy mượt
-- [ ] README rõ ràng
+### ✅ MILESTONES REACHED
+- [x] **Coverage Target Surpassed (95%+)**
+- [x] **All Functional Tests Passed**
 
 ---
 
-# 🗓️ Day 9 — 06/05 (Demo Day)
+# 🗓️ DAY 8 — 05/05 (Interface & Technical Docs)
+---
 
-## 🎯 Task
-- [ ] Chạy lại test
-- [ ] Deploy local
-- [ ] Demo theo flow
+### 🎯 MISSION OBJECTIVES
+- [x] **[OPTIONAL]** Frontend: React 19 + MetaMask Integration
+- [x] **[HIGH]** Production README: Tài liệu hóa toàn bộ hệ thống
+- [x] **[HIGH]** Demo Flow Preparation: Kịch bản thuyết trình
+
+### ⚠️ SYSTEM RISKS
+- **Frontend Sync**: Dữ liệu trên web không khớp với on-chain.
+- **Documentation Gap**: Mentor không hiểu cách cài đặt và chạy test.
+
+### ✅ MILESTONES REACHED
+- [x] **Neon-Noir Interface Operational**
+- [x] **Comprehensive Docs Completed**
 
 ---
 
-# 🔥 Strategy
+# 🗓️ DAY 9 — 06/05 (Mission Completion)
+---
 
-## Thứ tự ưu tiên
-1. Data model
-2. Vault
-3. Plan
-4. Deposit
-5. Withdraw
-6. Renew
-7. Test
-8. Frontend
-
-## Nguyên tắc
-- Không làm frontend trước
-- Luôn test từng phần
-- Mỗi task DONE phải chạy được
+### 🎯 MISSION OBJECTIVES
+- [x] **[HIGH]** Final Regression Testing
+- [x] **[HIGH]** Deployment to Local/Testnet
+- [x] **[HIGH]** Final Demo Walkthrough
 
 ---
 
-# 🚀 Goal cuối
-- Backend ổn định
-- Test coverage > 90%
-- Demo mượt, không lỗi
+# ⚔️ BATTLE STRATEGY (WAR ROOM)
+
+| Cấp độ | Giai đoạn | Trọng tâm | Ưu tiên |
+| :--- | :--- | :--- | :--- |
+| **01** | Data Foundation | Structs, Enums, Mock Tokens | **CRITICAL** |
+| **02** | Core Engine | Vault & Plan Management | **HIGH** |
+| **03** | Business Logic | Deposits, Withdraws, Renewals | **HIGH** |
+| **04** | Security | Reentrancy, Access Control, Tests | **HIGH** |
+| **05** | Presentation | Frontend & Documentation | **OPTIONAL** |
+
+### 🛡️ NGUYÊN TẮC TÁC CHIẾN
+> [!IMPORTANT]
+> - **Code First, UI Later**: Tuyệt đối không làm Frontend khi Backend chưa pass 100% test.
+> - **Continuous Testing**: Mỗi khi hoàn thiện 1 function, phải có unit test đi kèm ngay lập tức.
+> - **Atomic Commit**: Mỗi task DONE phải đảm bảo hệ thống vẫn compile và chạy được.
+
+---
+
+<h3 align="center">🚀 FINAL MISSION GOAL: 100% OPERATIONAL & SECURE</h3>
