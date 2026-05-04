@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Use deep blue-black instead of pure black to create a cinematic feel */
+    @apply bg-[#020617] text-white antialiased;
+  }
+
+  /* Remove default body margin */
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Hide increment/decrement arrows for type="number" in Chrome, Safari, Edge, Opera */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Hide increment/decrement arrows in Firefox */
+  input[type="number"] {
+    appearance: textfield;
+  }
+}
