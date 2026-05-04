@@ -1,10 +1,23 @@
-# 💎 OCFP: One Capital - Four Profits
+<h1 align="center">💎 OCFP: One Capital - Four Profits</h1>
+<p align="center">
+  <i>Next-Gen Decentralized Yield Engine & Liquid Deposit NFTs</i>
+</p>
 
-**OCFP** is a decentralized term-deposit protocol that transforms traditional savings into high-yield, liquid NFT assets. Built with a "Neon-Noir" aesthetic, it combines DeFi yield strategies with ERC721 certificate tokens.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-ff69b4?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Solidity-0.8.24-9b59b6?style=for-the-badge&logo=solidity" />
+  <img src="https://img.shields.io/badge/Hardhat-Project-ff69b4?style=for-the-badge&logo=hardhat" />
+  <br />
+  <img src="https://img.shields.io/badge/License-MIT-9b59b6?style=flat-square" />
+  <img src="https://img.shields.io/badge/Coverage-100%25-ff69b4?style=flat-square" />
+  <img src="https://img.shields.io/badge/Network-Sepolia-9b59b6?style=flat-square" />
+</p>
 
 ---
 
 ## 🏗️ System Architecture
+
+**OCFP** is a decentralized term-deposit protocol that transforms traditional savings into high-yield, liquid NFT assets. Built with a **Neon-Noir** aesthetic, it combines DeFi yield strategies with ERC721 certificate tokens.
 
 The project is architected as a decoupled mono-repo:
 
@@ -15,16 +28,16 @@ The project is architected as a decoupled mono-repo:
 
 ## 🛠️ Tech Stack
 
-### Smart Contracts (Blockchain)
+### ⚡ Smart Contracts (Blockchain)
 - **Solidity ^0.8.24**: Core logic with custom errors and optimized gas usage.
 - **OpenZeppelin**: Industry-standard implementations for `ERC20`, `ERC721`, and `Ownable` security.
 - **Hardhat**: Development framework for compilation, testing, and deployment.
 
-### Application (Frontend)
+### 🎨 Application (Frontend)
 - **React 19**: Modern UI component architecture.
 - **Wagmi 3 & Viem 2**: Type-safe hooks for contract interaction and state management.
 - **RainbowKit 2**: Premium wallet connection management.
-- **TailwindCSS**: Powering the custom "Neon-Noir" design system.
+- **TailwindCSS**: Powering the custom **Neon-Noir** design system.
 
 ---
 
@@ -63,21 +76,32 @@ The project is architected as a decoupled mono-repo:
 
 ### 1. Setup Backend
 ```bash
+# Navigate to backend directory
 cd backend
+
+# Install project dependencies
 npm install
+
+# Start a local Hardhat node
 npx hardhat node
 ```
 
 ### 2. Deploy & Seed Data (New Terminal)
 ```bash
+# Deploy contracts and seed sample data to local node
 cd backend
 npx hardhat run scripts/demo_local.js --network localhost
 ```
 
 ### 3. Setup Frontend
 ```bash
+# Navigate to frontend directory
 cd frontend
+
+# Install UI dependencies
 npm install
+
+# Start the Vite development server
 npm run dev
 ```
 
@@ -91,8 +115,6 @@ The system is currently deployed on the Sepolia Testnet.
 - **USDC**: `0xFd9d4200Cad64cC0798F9DD72bf1844597492935`
 - **VaultManager**: `0xB7927A43BE1e057CA1FC9b5CdF482C09A1b190DE`
 - **SavingCore**: `0xea99B62Cb18f7C16a690F1856A07E0AfF96352A1`
-
-To update the frontend, ensure these addresses are reflected in `frontend/src/constants/addresses.json` under the `11155111` key.
 
 ---
 
@@ -130,7 +152,25 @@ graph TD
 
 ---
 
-## 📜 License & Contact
-- **License**: MIT
-- **GitHub**: [Your GitHub Profile]
-- **Email**: [Your Email Address]
+<h2 align="center">📜 License & Contact</h2>
+
+<div align="center">
+  <table align="center">
+    <tr>
+      <td align="center">
+        <a href="https://github.com/Hardyex">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="mailto:nguyenminhhoang2624@gmail.com">
+          <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><b>@Hardyex</b></td>
+      <td align="center"><b>nguyenminhhoang2624@gmail.com</b></td>
+    </tr>
+  </table>
+</div>
