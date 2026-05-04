@@ -221,8 +221,3 @@ src/
 ```
 
 ---
-
-<div align="center">
-  <p>Built with ❤️ by <b>Antigravity</b> for the Next Generation of DeFi.</p>
-  <p><i>Engineered for transparency, security, and visual impact.</i></p>
-</div>

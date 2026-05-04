@@ -265,7 +265,8 @@ npx hardhat verify --network sepolia <CONTRACT_ADDRESS> <CONSTRUCTOR_ARGS>
 ## 📂 Project Structure
 
 ```text
-├── blockchain-savings-system/
+blockchain-savings-system
+├── backend/
 │   ├── contracts/            # Smart Contract logic
 │   │   ├── SavingCore.sol    # Core logic & NFT management
 │   │   ├── VaultManager.sol  # Treasury & interest management
@@ -273,7 +274,7 @@ npx hardhat verify --network sepolia <CONTRACT_ADDRESS> <CONSTRUCTOR_ARGS>
 │   ├── scripts/              # Deployment & Demo scripts
 │   ├── test/                 # Comprehensive Chai/Mocha tests
 │   └── hardhat.config.js     # Hardhat configuration
-└── blockchain-UI-system/     # Frontend (React/Vite)
+└── frontend/                # Frontend (React/Vite)
 ```
 
 ---
