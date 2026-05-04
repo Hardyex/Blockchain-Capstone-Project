@@ -25,9 +25,9 @@ describe("Blockchain Saving System - Final Optimized Coverage", function () {
     // 4. Configure VaultManager
     await vault.setSavingCore(await savingCore.getAddress());
 
-    // Cấp tiền và approve
+    // Fund and approve
     await usdc.mint(user.address, INITIAL_SUPPLY);
-    await usdc.mint(await vault.getAddress(), INITIAL_SUPPLY); // Cấp tiền cho Vault để trả lãi
+    await usdc.mint(await vault.getAddress(), INITIAL_SUPPLY); // Fund Vault to pay interest
     await usdc.connect(user).approve(await savingCore.getAddress(), INITIAL_SUPPLY);
 
     // Plan 0: 30 days, 5% APR, 2% Penalty, Min Deposit 0
@@ -159,7 +159,7 @@ describe("Blockchain Saving System - Final Optimized Coverage", function () {
       await expect(savingCore.connect(user).withdrawAtMaturity(0)).to.be.revertedWith("Not mature yet");
       await expect(savingCore.connect(user).manualRenew(0, 0)).to.be.revertedWith("Not mature yet");
 
-      await time.increase(35 * 24 * 60 * 60); // Quá hạn 3 ngày grace period
+      await time.increase(35 * 24 * 60 * 60); // Past 3-day grace period
       await expect(savingCore.connect(user).manualRenew(0, 0)).to.be.revertedWith("Grace period passed");
     });
 
