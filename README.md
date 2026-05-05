@@ -1,5 +1,5 @@
 <h1 align="center">
-  💎 OCFP: One Capital - Four Profits
+  OCFP: One Capital - Four Profits
 </h1>
 
 <p align="center">
@@ -29,18 +29,18 @@
 
 ---
 
-## 🎯 Project Overview & Vision
+## Project Overview & Vision
 
 The **OCFP (One Capital - Four Profits)** protocol is a decentralized savings system that transforms traditional term-deposits into high-yield, liquid NFT assets. Built with a **Neon-Noir** aesthetic, it combines DeFi yield strategies with ERC721 certificate tokens to provide a transparent, automated alternative to centralized banking.
 
-### 💡 Key Innovations
+### Key Innovations
 - **NFT-based Certificates**: Every deposit is represented by a tradeable NFT, enabling liquidity even during lock-up periods.
 - **Treasury Isolation**: Dedicated `VaultManager` for interest payouts, ensuring user principal remains isolated and safe.
 - **Automated Compounding**: System-triggered auto-renewal for seamless interest reinvestment.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 The project is organized as a unified monorepo to ensure tight integration between the blockchain logic and the user interface.
 
@@ -62,7 +62,7 @@ The project is organized as a unified monorepo to ensure tight integration betwe
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## Quick Start (Local Development)
 
 ### 1. Initialize Backend & Node
 ```bash
@@ -87,7 +87,7 @@ npm run dev
 
 ---
 
-## 🌐 Deployment (Sepolia Testnet)
+## Deployment (Sepolia Testnet)
 
 **Chain ID: 11155111**
 - **USDC**: `0xFd9d4200Cad64cC0798F9DD72bf1844597492935`
@@ -96,7 +96,7 @@ npm run dev
 
 ---
 
-## 🔮 Future Roadmap
+## Future Roadmap
 
 - **Governance**: DAO for adjusting protocol parameters (APR, Fees).
 - **Secondary Market**: Native marketplace for matured NFT certificates.
@@ -105,25 +105,21 @@ npm run dev
 
 ---
 
-<h2 align="center">📜 License & Contact</h2>
+<h2 align="center">License & Contact</h2>
 
-<div align="center">
-  <table align="center">
-    <tr>
-      <td align="center">
-        <a href="https://github.com/Hardyex">
-          <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=22d3ee" />
-        </a>
-      </td>
-      <td align="center">
-        <a href="mailto:nguyenminhhoang2624@gmail.com">
-          <img src="https://img.shields.io/badge/Gmail-111111?style=for-the-badge&logo=gmail&logoColor=22d3ee" />
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center"><b style="color:#22d3ee;">@Hardyex</b></td>
-      <td align="center"><b style="color:#22d3ee;">nguyenminhhoang2624@gmail.com</b></td>
-    </tr>
-  </table>
-</div>
+<p align="center">
+  Distributed under the <b>MIT License</b>.
+</p>
+
+<p align="center">
+  <a href="https://github.com/Hardyex">
+    <img src="https://img.shields.io/badge/GitHub-Hardyex-181717?style=for-the-badge&logo=github&logoColor=22d3ee" />
+  </a>
+  <a href="mailto:nguyenminhhoang2624@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-Contact_Me-ea4335?style=for-the-badge&logo=gmail&logoColor=white" />
+  </a>
+</p>
+
+<p align="center">
+  <i>Maintained by <b>NguyenMinhHoang</b> — Final Intern Project 2026</i>
+</p>

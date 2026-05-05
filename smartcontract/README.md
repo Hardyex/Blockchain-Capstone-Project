@@ -1,15 +1,22 @@
-# 🏦 OCFP: Smart Contract Protocol
+# OCFP: Smart Contract Protocol
 
-[![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.24-blue)](https://soliditylang.org/)
-[![Hardhat](https://img.shields.io/badge/Hardhat-2.22.1-yellow)](https://hardhat.org/)
-[![Coverage](https://img.shields.io/badge/Coverage-%3E98%25-green)](https://github.com/Hardyex)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+<p align="left">
+  <img src="https://img.shields.io/badge/Solidity-0.8.24-363636?style=for-the-badge&logo=solidity&logoColor=white" />
+  <img src="https://img.shields.io/badge/Hardhat-2.22.1-27272a?style=for-the-badge&logo=hardhat&logoColor=fff100" />
+  <img src="https://img.shields.io/badge/Security-Audited-06b6d4?style=for-the-badge&logo=shield&logoColor=white" />
+</p>
 
-Technical documentation for the OCFP (One Capital - Four Profits) core protocol logic, treasury management, and security architecture.
+<p align="left">
+  <img src="https://img.shields.io/badge/Coverage-98%25%2B-059669?style=flat-square&logo=codecov&logoColor=white" />
+  <img src="https://img.shields.io/badge/Network-Sepolia-7c3aed?style=flat-square&logo=ethereum&logoColor=white" />
+  <img src="https://img.shields.io/badge/License-MIT-4ade80?style=flat-square&logo=open-source-initiative&logoColor=111827" />
+</p>
+
+> Technical documentation for the **OCFP (One Capital - Four Profits)** core protocol logic, treasury management, and security architecture.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 The protocol is split into three primary components to ensure modularity and risk isolation:
 
@@ -17,7 +24,7 @@ The protocol is split into three primary components to ensure modularity and ris
 2.  **`VaultManager.sol` (The Treasury)**: Manages liquidity for interest payouts and enforces administrative safety buffers.
 3.  **`MockUSDC.sol` (The Asset)**: A standard ERC20 token used as the settlement asset (simulating real USDC).
 
-### 📐 Design Decisions & "The Why"
+### Design Decisions & "The Why"
 - **Why NFT instead of Mapping?**
     - *Tradability*: Users can sell their "locked" deposits on marketplaces for immediate liquidity.
     - *Composability*: Enables the deposit certificate to be used as collateral in other DeFi protocols.
@@ -28,7 +35,7 @@ The protocol is split into three primary components to ensure modularity and ris
 
 ---
 
-## 🔁 Contract Interaction Flow
+## Contract Interaction Flow
 
 The protocol follows a decoupled architecture to enforce trust boundaries.
 
@@ -66,7 +73,7 @@ sequenceDiagram
 
 ---
 
-## 🔄 Execution Flows
+## Execution Flows
 
 ### 1. Deposit Flow
 1.  **Approval**: User calls `ERC20.approve(...)` for `SavingCore`.
@@ -86,7 +93,7 @@ sequenceDiagram
 
 ---
 
-## 🛡️ Security & Risk Management
+## Security & Risk Management
 
 ### 1. Reentrancy Protection (CEI Pattern)
 Internal state updates (e.g., `deposit.status = Withdrawn`) occur strictly **before** any external ERC20 calls. This removes the need for a `ReentrancyGuard` and reduces gas costs while maintaining absolute security.
@@ -100,7 +107,7 @@ Interest payouts are treated as "Best Effort". If `VaultManager` is insolvent, t
 
 ---
 
-## ⚙️ Technical Setup & Installation
+## Technical Setup & Installation
 
 ### 1. Environment Setup
 Create a `.env` file in the root of the `smartcontract` directory:
@@ -134,7 +141,7 @@ npx hardhat run scripts/deploy_sepolia.js --network sepolia
 
 ---
 
-## 🧪 Testing Strategy
+## Testing Strategy
 
 The protocol is backed by an industry-standard test suite achieving **>98% line coverage**.
 
@@ -145,14 +152,14 @@ The protocol is backed by an industry-standard test suite achieving **>98% line 
 
 ---
 
-## 🧠 Engineering Insights & Trade-offs
+## Engineering Insights & Trade-offs
 
-### 🏆 Vault-Core Decoupling
+### Vault-Core Decoupling
 By separating the Principal Ledger (`SavingCore`) from the Interest Treasury (`VaultManager`), we achieve **Liquidity Safety**. Principal is never co-mingled with yield, ensuring users can exit their initial positions even if the protocol's interest capacity is compromised.
 
 ---
 
-## ⚠️ Limitations & Future Work
+## Limitations & Future Work
 - **Decentralization**: Moving `autoRenew` to Chainlink Automation.
 - **Multi-Collateral**: Implementing generic `IERC20` support beyond `MockUSDC`.
 - **Upgradeability**: Future iterations will implement UUPS proxies for long-term maintenance.

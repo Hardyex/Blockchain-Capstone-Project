@@ -1,15 +1,25 @@
-# 💎 OCFP - One Capital Four Profits | Blockchain Saving Frontend
+# OCFP - One Capital Four Profits | Blockchain Saving Frontend
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vitejs.dev/)
-[![Wagmi](https://img.shields.io/badge/Wagmi-3-blue)](https://wagmi.sh/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+<p align="left">
+  <!-- Brand & Experience -->
+  <img src="https://img.shields.io/badge/Experience-Neon--Noir-7c3aed?style=for-the-badge&logo=visual-studio-code&logoColor=white" />
+  <img src="https://img.shields.io/badge/UI--UX-Premium-ec4899?style=for-the-badge&logo=adobe-lightroom&logoColor=white" />
+</p>
 
-A premium, production-grade decentralized finance (DeFi) interface designed for high-yield blockchain savings. This frontend provides a cinematic "Neon-Noir" experience for users to manage their digital assets through NFT-based saving certificates.
+<p align="left">
+  <!-- Core Tech -->
+  <img src="https://img.shields.io/badge/React-19-23272f?style=flat-square&logo=react&logoColor=149afb" />
+  <img src="https://img.shields.io/badge/Vite-Project-2e3a59?style=flat-square&logo=vite&logoColor=ffc517" />
+  <img src="https://img.shields.io/badge/Wagmi-Connect-1e40af?style=flat-square&logo=wagmi&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-3.4-0f172a?style=flat-square&logo=tailwind-css&logoColor=38bdf8" />
+  <img src="https://img.shields.io/badge/Radix_UI-Black-000000?style=flat-square&logo=radix-ui&logoColor=white" />
+</p>
+
+> A premium, production-grade decentralized finance (DeFi) interface designed for high-yield blockchain savings. This frontend provides a cinematic **"Neon-Noir"** experience for users to manage their digital assets through **NFT-based saving certificates**.
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 **OCFP (One Capital Four Profits)** is a high-performance dApp serving as the gateway to a decentralized savings ecosystem. It abstracts the complexity of smart contract interactions into a sleek, real-time dashboard.
 
@@ -19,7 +29,7 @@ A premium, production-grade decentralized finance (DeFi) interface designed for 
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 Follow these steps to get the development environment running locally:
 
@@ -61,7 +71,7 @@ npm run preview
 
 ---
 
-## ▶️ Running the Application
+## Running the Application
 
 1. **Connect Wallet**: Connect your Web3 wallet via RainbowKit.
 2. **Switch Network**: Switch to the Sepolia test network.
@@ -72,7 +82,7 @@ npm run preview
 
 ---
 
-## 🔗 Contract Integration
+## Contract Integration
 
 The frontend is architected as a state-aware layer that interacts directly with the OCFP protocol. To ensure seamless operation across different environments (Local, Staging, Production), contract addresses are managed through a robust environment variable system.
 
@@ -91,7 +101,7 @@ VITE_USDC_ADDRESS=0x578883cf1d9cD74bEa3167EF6Bd14fC5682E30D7
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 - **React 19 & Vite 8**: Chosen for optimal HMR performance and modern hook-based architecture.
 - **wagmi 3 & viem 2**: Industry-standard stack for type-safe contract interactions and robust wallet state management.
@@ -99,8 +109,25 @@ VITE_USDC_ADDRESS=0x578883cf1d9cD74bEa3167EF6Bd14fC5682E30D7
 - **TailwindCSS 3**: Powering the custom **Neon-Noir** design system with cinematic gradients and glassmorphism effects.
 
 ---
+## Project Structure
 
-## 🏗️ Core Engineering Patterns
+```text
+src/
+ ├── abis/              # EVM Contract ABIs (SavingCore, VaultManager, USDC)
+ ├── components/        # Atomic UI units
+ │    ├── DepositForm   # Approval + Open Deposit logic
+ │    ├── SavingPlans   # Plan grid & metadata display
+ │    ├── UserDashboard # NFT gallery & real-time profit tracking
+ │    └── VaultAdmin    # System governance & liquidity tools
+ ├── constants/         # Multi-network address mapping & ABI exports
+ ├── hooks/             # Custom Web3 hooks & business logic
+ ├── assets/            # Branding & static media
+ ├── wagmi.js           # RainbowKit, Provider & Chain configuration
+ └── index.css          # Tailwind base & cinematic styling tokens
+```
+
+---
+## Core Engineering Patterns
 
 ### 1. The "Approve-Execute" Atomic Flow
 To eliminate the UX friction inherent in ERC20 interactions, the app implements an automated two-step sequence:
@@ -119,7 +146,7 @@ Accrued interest is calculated on-chain but visualized via a high-performance po
 
 ---
 
-## 🔄 Transaction Lifecycle (UI)
+## Transaction Lifecycle (UI)
 
 - **Idle**: Awaits user action (e.g., clicking deposit).
 - **Signing**: Triggers wallet popup for signature approval.
@@ -130,7 +157,7 @@ Accrued interest is calculated on-chain but visualized via a high-performance po
 
 ---
 
-## ❌ Web3 Edge Cases & Failure Handling
+## Web3 Edge Cases & Failure Handling
 
 - **User rejects transaction (Error 4001)**: User cancels action in their wallet. The UI gracefully resets to the idle state.
 - **Insufficient gas balance**: Wallet lacks ETH for transaction fees. The UI/wallet blocks the transaction and prompts the user.
@@ -140,7 +167,7 @@ Accrued interest is calculated on-chain but visualized via a high-performance po
 
 ---
 
-## 🛡️ Production Optimization & Security
+## Production Optimization & Security
 
 ### 1. BigInt Safety & Precision
 All financial calculations use native `BigInt` (via `viem`) to prevent floating-point errors common in DeFi. Precision is maintained at 6 decimals (USDC standard) throughout the data pipeline.
@@ -155,7 +182,7 @@ The UI estimates gas limits before transaction submission, preventing users from
 
 ---
 
-## 🎨 UI / UX Excellence
+## UI / UX Excellence
 
 - **Procedural NFT Art**: Each "Saving Book" card features a unique gradient generated from its `tokenId`, ensuring every user's certificate feels distinct and personal.
 - **Glassmorphic Aesthetic**: Deep blue-black backgrounds (`#020617`) paired with neon-accented borders and ambient glows create a high-end "Institutional-grade" feel.
@@ -163,7 +190,7 @@ The UI estimates gas limits before transaction submission, preventing users from
 
 ---
 
-## 📊 State Management
+## State Management
 
 - **External State**: The blockchain serves as the single source of truth.
 - **Server-State (TanStack Query)**: Manages caching, background refetching, and transaction persistence.
@@ -171,7 +198,7 @@ The UI estimates gas limits before transaction submission, preventing users from
 
 ---
 
-## 🧪 Testing & Quality Assurance
+## Testing & Quality Assurance
 
 Ensuring the reliability of financial interactions is paramount. The frontend employs a multi-layered testing strategy:
 
@@ -185,7 +212,7 @@ Ensuring the reliability of financial interactions is paramount. The frontend em
 
 ---
 
-## 🚀 Deployment Strategy
+## Deployment Strategy
 
 ### Environment Mapping
 | Environment | Network | RPC Provider |
@@ -203,21 +230,3 @@ This generates a highly compressed, tree-shaken production bundle located in the
 
 ---
 
-## 📂 Project Structure
-
-```text
-src/
- ├── abis/              # EVM Contract ABIs (SavingCore, VaultManager, USDC)
- ├── components/        # Atomic UI units
- │    ├── DepositForm   # Approval + Open Deposit logic
- │    ├── SavingPlans   # Plan grid & metadata display
- │    ├── UserDashboard # NFT gallery & real-time profit tracking
- │    └── VaultAdmin    # System governance & liquidity tools
- ├── constants/         # Multi-network address mapping & ABI exports
- ├── hooks/             # Custom Web3 hooks & business logic
- ├── assets/            # Branding & static media
- ├── wagmi.js           # RainbowKit, Provider & Chain configuration
- └── index.css          # Tailwind base & cinematic styling tokens
-```
-
----
