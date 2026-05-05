@@ -1,19 +1,30 @@
-<h1 align="center">💎 OCFP: One Capital - Four Profits</h1>
+<h1 align="center">
+  <span style="color:#22d3ee;">OCFP: One Capital - Four Profits</span>
+</h1>
+
 <p align="center">
-  <i>Next-Gen Decentralized Yield Engine & Liquid Deposit NFTs</i>
+  <i style="color:#a5b4fc;">
+    Next-Gen Decentralized Yield Engine & Liquid Deposit NFTs
+  </i>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-ff69b4?style=for-the-badge&logo=react" />
-  <img src="https://img.shields.io/badge/Solidity-0.8.24-9b59b6?style=for-the-badge&logo=solidity" />
-  <img src="https://img.shields.io/badge/Hardhat-2.22.1-ff69b4?style=for-the-badge&logo=hardhat" />
-  <img src="https://img.shields.io/badge/TailwindCSS-ff69b4?style=for-the-badge&logo=tailwind-css" />
-  <img src="https://img.shields.io/badge/Vite-Project-ff69b4?style=for-the-badge&logo=vite" />
+  <!-- Neon Highlight -->
+  <img src="https://img.shields.io/badge/OCFP-Core-111111?style=for-the-badge&logo=ethereum&logoColor=22d3ee" />
+  <img src="https://img.shields.io/badge/DeFi-Protocol-111111?style=for-the-badge&logo=chainlink&logoColor=7c3aed" />
+  <br /><br />
+  <!-- Tech Stack -->
+  <img src="https://img.shields.io/badge/React-19-111111?style=for-the-badge&logo=react&logoColor=22d3ee" />
+  <img src="https://img.shields.io/badge/Solidity-0.8.24-111111?style=for-the-badge&logo=solidity&logoColor=7c3aed" />
+  <img src="https://img.shields.io/badge/Hardhat-2.22.1-111111?style=for-the-badge&logo=hardhat&logoColor=22d3ee" />
+  <img src="https://img.shields.io/badge/TailwindCSS-111111?style=for-the-badge&logo=tailwind-css&logoColor=7c3aed" />
+  <img src="https://img.shields.io/badge/Vite-Project-111111?style=for-the-badge&logo=vite&logoColor=22d3ee" />
   <br />
-  <img src="https://img.shields.io/badge/Coverage-100%25-ff69b4?style=flat-square" />
-  <img src="https://img.shields.io/badge/Network-Sepolia-9b59b6?style=flat-square" />
-  <img src="https://img.shields.io/badge/License-MIT-9b59b6?style=flat-square" />
-  <img src="https://img.shields.io/badge/RainbowKit-2-ff69b4?style=flat-square&logo=rainbowkit" />
+  <!-- Status -->
+  <img src="https://img.shields.io/badge/Coverage-100%25-111111?style=flat-square&logo=codecov&logoColor=22d3ee" />
+  <img src="https://img.shields.io/badge/Network-Sepolia-111111?style=flat-square&logo=ethereum&logoColor=7c3aed" />
+  <img src="https://img.shields.io/badge/License-MIT-111111?style=flat-square&logo=open-source-initiative&logoColor=22d3ee" />
+  <img src="https://img.shields.io/badge/RainbowKit-2-111111?style=flat-square&logo=rainbowkit&logoColor=7c3aed" />
 </p>
 
 ---
@@ -101,18 +112,18 @@ npm run dev
     <tr>
       <td align="center">
         <a href="https://github.com/Hardyex">
-          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
+          <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=22d3ee" />
         </a>
       </td>
       <td align="center">
         <a href="mailto:nguyenminhhoang2624@gmail.com">
-          <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+          <img src="https://img.shields.io/badge/Gmail-111111?style=for-the-badge&logo=gmail&logoColor=22d3ee" />
         </a>
       </td>
     </tr>
     <tr>
-      <td align="center"><b>@Hardyex</b></td>
-      <td align="center"><b>nguyenminhhoang2624@gmail.com</b></td>
+      <td align="center"><b style="color:#22d3ee;">@Hardyex</b></td>
+      <td align="center"><b style="color:#22d3ee;">nguyenminhhoang2624@gmail.com</b></td>
     </tr>
   </table>
 </div>
