@@ -1,30 +1,30 @@
 <h1 align="center">
-  <span style="color:#22d3ee;">OCFP: One Capital - Four Profits</span>
+  💎 OCFP: One Capital - Four Profits
 </h1>
 
 <p align="center">
-  <i style="color:#a5b4fc;">
+  <i>
     Next-Gen Decentralized Yield Engine & Liquid Deposit NFTs
   </i>
 </p>
 
 <p align="center">
-  <!-- Neon Highlight -->
-  <img src="https://img.shields.io/badge/OCFP-Core-111111?style=for-the-badge&logo=ethereum&logoColor=22d3ee" />
-  <img src="https://img.shields.io/badge/DeFi-Protocol-111111?style=for-the-badge&logo=chainlink&logoColor=7c3aed" />
+  <!-- Highlight - Sử dụng nền tối, logo sáng để tạo sự sang trọng -->
+  <img src="https://img.shields.io/badge/OCFP--Core-1e1b4b?style=for-the-badge&logo=ethereum&logoColor=a78bfa" />
+  <img src="https://img.shields.io/badge/DeFi--Protocol-083344?style=for-the-badge&logo=chainlink&logoColor=22d3ee" />
   <br /><br />
-  <!-- Tech Stack -->
-  <img src="https://img.shields.io/badge/React-19-111111?style=for-the-badge&logo=react&logoColor=22d3ee" />
-  <img src="https://img.shields.io/badge/Solidity-0.8.24-111111?style=for-the-badge&logo=solidity&logoColor=7c3aed" />
-  <img src="https://img.shields.io/badge/Hardhat-2.22.1-111111?style=for-the-badge&logo=hardhat&logoColor=22d3ee" />
-  <img src="https://img.shields.io/badge/TailwindCSS-111111?style=for-the-badge&logo=tailwind-css&logoColor=7c3aed" />
-  <img src="https://img.shields.io/badge/Vite-Project-111111?style=for-the-badge&logo=vite&logoColor=22d3ee" />
+  <!-- Tech Stack - Đồng nhất tone màu để tránh bị rối mắt -->
+  <img src="https://img.shields.io/badge/React--19-23272f?style=for-the-badge&logo=react&logoColor=149afb" />
+  <img src="https://img.shields.io/badge/Solidity--0.8.24-363636?style=for-the-badge&logo=solidity&logoColor=white" />
+  <img src="https://img.shields.io/badge/Hardhat--2.22.1-27272a?style=for-the-badge&logo=hardhat&logoColor=fff100" />
+  <img src="https://img.shields.io/badge/TailwindCSS-0f172a?style=for-the-badge&logo=tailwind-css&logoColor=38bdf8" />
+  <img src="https://img.shields.io/badge/Vite--Project-2e3a59?style=for-the-badge&logo=vite&logoColor=ffc517" />
   <br />
-  <!-- Status -->
-  <img src="https://img.shields.io/badge/Coverage-100%25-111111?style=flat-square&logo=codecov&logoColor=22d3ee" />
-  <img src="https://img.shields.io/badge/Network-Sepolia-111111?style=flat-square&logo=ethereum&logoColor=7c3aed" />
-  <img src="https://img.shields.io/badge/License-MIT-111111?style=flat-square&logo=open-source-initiative&logoColor=22d3ee" />
-  <img src="https://img.shields.io/badge/RainbowKit-2-111111?style=flat-square&logo=rainbowkit&logoColor=7c3aed" />
+  <!-- Status - Dùng phong cách tối giản để tập trung vào thông số -->
+  <img src="https://img.shields.io/badge/Coverage-100%25-059669?style=flat-square&logo=codecov&logoColor=white" />
+  <img src="https://img.shields.io/badge/Network-Sepolia-7c3aed?style=flat-square&logo=ethereum&logoColor=white" />
+  <img src="https://img.shields.io/badge/License-MIT-4ade80?style=flat-square&logo=open-source-initiative&logoColor=111827" />
+  <img src="https://img.shields.io/badge/RainbowKit-2-0ea5e9?style=flat-square&logo=rainbowkit&logoColor=white" />
 </p>
 
 ---
