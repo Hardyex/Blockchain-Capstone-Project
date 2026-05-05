@@ -113,7 +113,7 @@ export function UserDashboard() {
             if (result.status !== 'success') return null;
             const deposit = result.result;
             const tokenId = userIds[index];
-            const [planId, principal, startAt, maturityAt, , penaltyBpsAtOpen, status] = deposit;
+            const [planId, principal, startAt, maturityAt, aprBpsAtOpen, penaltyBpsAtOpen, status] = deposit;
 
             const activeIndex = activeUserIds.indexOf(tokenId);
             const interest = (activeIndex !== -1 ? interestData?.[activeIndex]?.result : 0n) ?? 0n;
@@ -146,7 +146,7 @@ export function UserDashboard() {
                   {/* Display Accrued Interest */}
                   {!isWithdrawn && (
                     <div className="absolute bottom-4 right-5 text-right z-10 animate-pulse">
-                      <div className="text-[10px] text-white/50 uppercase tracking-tighter">Accrued Interest (+{Number(penaltyBpsAtOpen) / 100}%)</div>
+                      <div className="text-[10px] text-white/50 uppercase tracking-tighter">Accrued Interest (+{Number(aprBpsAtOpen) / 100}%)</div>
                       <div className="text-lg font-bold text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
                         +{formatUnits(interest, 6)} USDC
                       </div>
@@ -185,7 +185,7 @@ export function UserDashboard() {
                       >Withdraw at Maturity</button>
                       {inGracePeriod && (
                         <button
-                          onClick={() => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'manualRenew', args: [tokenId] })}
+                          onClick={() => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'manualRenew', args: [tokenId, planId] })}
                           disabled={isPending}
                           className="flex-1 py-2.5 bg-neonBlue/20 text-neonBlue hover:bg-neonBlue/30 rounded-xl text-sm font-bold transition shadow-[0_0_10px_rgba(0,210,255,0.1)] hover:shadow-[0_0_15px_rgba(0,210,255,0.3)] disabled:opacity-50"
                         >🔄 Renew</button>

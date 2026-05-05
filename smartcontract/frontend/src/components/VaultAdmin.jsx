@@ -27,6 +27,7 @@ export function VaultAdmin() {
   // Data
   const { data: isPaused, refetch: refetchPaused } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'paused' });
   const { data: vaultBalance, refetch: refetchBalance } = useReadContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'balanceOf', args: [VAULT_MANAGER_ADDRESS] });
+  const { data: adminBalance, refetch: refetchAdminBalance } = useReadContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'balanceOf', args: [address] });
   const { data: ownerAddress } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'owner' });
   const { data: nextDepositId, refetch: refetchNextDeposit } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextDepositId' });
   const { data: nextPlanId, refetch: refetchNextPlan } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextPlanId' });
@@ -59,6 +60,7 @@ export function VaultAdmin() {
   useEffect(() => {
     refetchPaused();
     refetchBalance();
+    refetchAdminBalance();
     refetchNextDeposit();
     refetchNextPlan();
     refetchPlans();
@@ -85,6 +87,7 @@ export function VaultAdmin() {
   };
 
   const handleUpdatePlan = () => {
+    if (!planTenor || !planApr || !planMin || !planMax || !planPenalty) return;
     writeContract({
       address: SAVING_CORE_ADDRESS,
       abi: SAVING_CORE_ABI,
@@ -172,10 +175,10 @@ export function VaultAdmin() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <FinanceBox
                 title="Pump Liquidity"
-                desc="Deposit USDC into the Vault to ensure interest payment capacity."
+                desc={`Deposit USDC into the Vault. Your Balance: ${adminBalance ? formatUnits(adminBalance, 6) : '0'} USDC`}
                 value={fundAmount}
                 onChange={setFundAmount}
-                onAction={() => writeContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'transfer', args: [VAULT_MANAGER_ADDRESS, parseUnits(fundAmount, 6)] })}
+                onAction={() => fundAmount && writeContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'transfer', args: [VAULT_MANAGER_ADDRESS, parseUnits(fundAmount, 6)] })}
                 btnText="Deposit Now"
                 theme="emerald"
               />
@@ -184,7 +187,7 @@ export function VaultAdmin() {
                 desc="Withdraw funds from the Vault to Admin wallet (Max 90% balance)."
                 value={withdrawAmount}
                 onChange={setWithdrawAmount}
-                onAction={() => writeContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'withdraw', args: [address, parseUnits(withdrawAmount, 6)] })}
+                onAction={() => withdrawAmount && writeContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'withdraw', args: [address, parseUnits(withdrawAmount, 6)] })}
                 btnText="Withdraw Now"
                 theme="purple"
               />
@@ -209,7 +212,10 @@ export function VaultAdmin() {
                   </div>
                 </div>
                 <button
-                  onClick={editingPlanId !== null ? handleUpdatePlan : () => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'createPlan', args: [Number(planTenor), Number(planApr) * 100, parseUnits(planMin, 6), parseUnits(planMax, 6), Number(planPenalty) * 100] })}
+                  onClick={editingPlanId !== null ? handleUpdatePlan : () => {
+                    if (!planTenor || !planApr || !planMin || !planMax || !planPenalty) return;
+                    writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'createPlan', args: [Number(planTenor), Number(planApr) * 100, parseUnits(planMin, 6), parseUnits(planMax, 6), Number(planPenalty) * 100] });
+                  }}
                   className={`w-full ${editingPlanId !== null ? 'bg-orange-600' : 'bg-neonBlue'} text-white py-5 rounded-3xl font-black text-sm tracking-[0.2em] shadow-2xl transition-all`}
                 >
                   {editingPlanId !== null ? 'CONFIRM UPDATE' : 'RELEASE PRODUCT'}

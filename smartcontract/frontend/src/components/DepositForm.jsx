@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
-import { useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi';
+import { useWriteContract, useWaitForTransactionReceipt, useChainId, useAccount, useReadContract } from 'wagmi';
 import { addresses, SAVING_CORE_ABI, USDC_ABI } from '../constants';
 import { parseUnits, formatUnits } from 'viem';
 
 export function DepositForm({ planId, minDeposit, onClose }) {
   const chainId = useChainId();
+  const { address } = useAccount();
   const { SAVING_CORE_ADDRESS, USDC_ADDRESS } = addresses[chainId] || addresses[31337];
   const [depositAmount, setDepositAmount] = useState(minDeposit ? formatUnits(minDeposit, 6) : "100");
+
+  const { data: userBalance } = useReadContract({
+    address: USDC_ADDRESS,
+    abi: USDC_ABI,
+    functionName: 'balanceOf',
+    args: [address],
+  });
   
   const { data: hashApprove, writeContract: writeApprove, isPending: isApproving } = useWriteContract();
   const { data: hashDeposit, writeContract: writeDeposit, isPending: isDepositing } = useWriteContract();
@@ -75,9 +83,14 @@ export function DepositForm({ planId, minDeposit, onClose }) {
 
         <div className="flex flex-col gap-5">
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-300 mb-2 pl-1">
-              Deposit amount (USDC)
-            </label>
+            <div className="flex justify-between items-center mb-2 pl-1">
+              <label className="block text-sm font-medium text-gray-300">
+                Deposit amount (USDC)
+              </label>
+              <span className="text-[10px] text-gray-500">
+                Balance: <span className="text-gray-300">{userBalance ? formatUnits(userBalance, 6) : '0'}</span> USDC
+              </span>
+            </div>
             <div className="relative flex items-center bg-white/5 border border-white/10 rounded-xl overflow-hidden focus-within:border-neonBlue transition-all duration-300">
               <input
                 type="number"
