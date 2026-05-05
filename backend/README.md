@@ -274,7 +274,7 @@ blockchain-savings-system
 │   ├── scripts/              # Deployment & Demo scripts
 │   ├── test/                 # Comprehensive Chai/Mocha tests
 │   └── hardhat.config.js     # Hardhat configuration
-└── frontend/                # Frontend (React/Vite)
+└── frontend/                 # Frontend (React/Vite)
 ```
 
 ---
