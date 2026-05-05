@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./VaultManager.sol";
+import "hardhat/console.sol";
 
 event Withdrawn(uint256 indexed depositId, address indexed user, uint256 amount, uint256 interest);
 event Renewed(uint256 indexed depositId, uint256 startAt, uint256 maturityAt);
@@ -139,6 +140,11 @@ contract SavingCore is ERC721, Ownable {
             usdc.transfer(vault.feeReceiver(), penalty);
         }
         usdc.transfer(msg.sender, amountToUser);
+
+        console.log("--- RUT TIEN TRUOC HAN ---");
+        console.log("Goc ban dau:", deposit.principal / 1e6, "USDC");
+        console.log("Phi phat:", penalty / 1e6, "USDC");
+        console.log("Thuc nhan:", amountToUser / 1e6, "USDC");
 
         emit Withdrawn(_depositId, msg.sender, amountToUser, 0);
     }

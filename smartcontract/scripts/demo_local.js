@@ -70,7 +70,7 @@ async function main() {
   console.log("Đã nạp mẫu 1000 USDC vào Plan 0 thành công");
 
   // EXPORT TO FILE JSON FOR FRONTEND (Nested structure for multi-network support)
-  const frontendConstantsPath = path.join(__dirname, "../../blockchain-UI-system/saving-frontend/src/constants/addresses.json");
+  const frontendConstantsPath = path.join(__dirname, "../frontend/src/constants/addresses.json");
 
   try {
     let currentAddresses = {};

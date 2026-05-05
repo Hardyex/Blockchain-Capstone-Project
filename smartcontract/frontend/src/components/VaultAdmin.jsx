@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useReadContract, useReadContracts, useWriteContract, useAccount, useChainId } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useReadContract, useReadContracts, useWriteContract, useAccount, useChainId, useBlockNumber } from 'wagmi';
 import { addresses, VAULT_MANAGER_ABI, USDC_ABI, SAVING_CORE_ABI } from '../constants';
 import { formatUnits, parseUnits } from 'viem';
 
@@ -8,7 +8,7 @@ export function VaultAdmin() {
   const chainId = useChainId();
   const { VAULT_MANAGER_ADDRESS, USDC_ADDRESS, SAVING_CORE_ADDRESS } = addresses[chainId] || addresses[31337];
   const [activeTab, setActiveTab] = useState('overview'); // overview, finance, plans, bot, settings
-  
+
   // States for forms
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [fundAmount, setFundAmount] = useState('');
@@ -22,36 +22,48 @@ export function VaultAdmin() {
   // Edit State
   const [editingPlanId, setEditingPlanId] = useState(null);
 
-  const { writeContract } = useWriteContract();
+  const { data: hash, writeContract } = useWriteContract();
 
   // Data
-  const { data: isPaused } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'paused' });
-  const { data: vaultBalance } = useReadContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'balanceOf', args: [VAULT_MANAGER_ADDRESS] });
+  const { data: isPaused, refetch: refetchPaused } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'paused' });
+  const { data: vaultBalance, refetch: refetchBalance } = useReadContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'balanceOf', args: [VAULT_MANAGER_ADDRESS] });
   const { data: ownerAddress } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'owner' });
-  const { data: nextDepositId } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextDepositId' });
-  const { data: nextPlanId } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextPlanId' });
+  const { data: nextDepositId, refetch: refetchNextDeposit } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextDepositId' });
+  const { data: nextPlanId, refetch: refetchNextPlan } = useReadContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'nextPlanId' });
 
   const isOwner = address?.toLowerCase() === ownerAddress?.toLowerCase();
 
   // Load All Plans for Management
   const numPlans = Number(nextPlanId || 0);
   const planIds = Array.from({ length: numPlans }, (_, i) => i);
-  const { data: allPlansData } = useReadContracts({
+  const { data: allPlansData, refetch: refetchPlans } = useReadContracts({
     contracts: planIds.map(id => ({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'plans', args: [id] }))
   });
 
   // Bot logic
   const numDeposits = Number(nextDepositId || 0);
   const allIds = Array.from({ length: numDeposits }, (_, i) => i);
-  const { data: allDepositsData } = useReadContracts({
+  const { data: allDepositsData, refetch: refetchAllDeposits } = useReadContracts({
     contracts: allIds.map(id => ({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'deposits', args: [id] }))
   });
   const eligibleForAutoRenew = allIds.filter((id, index) => {
     const data = allDepositsData?.[index]?.result;
     if (!data) return false;
-    const [,,, maturityAt,, , status] = data;
+    const [, , , maturityAt, , , status] = data;
     return Number(status) !== 1 && Math.floor(Date.now() / 1000) > (Number(maturityAt) + 3 * 86400);
   });
+
+  // 6. Tự động Refetch mỗi khi có Block mới
+  const { data: blockNumber } = useBlockNumber({ watch: true });
+
+  useEffect(() => {
+    refetchPaused();
+    refetchBalance();
+    refetchNextDeposit();
+    refetchNextPlan();
+    refetchPlans();
+    refetchAllDeposits();
+  }, [blockNumber]);
 
   if (!isOwner) return <AccessDenied />;
 
@@ -99,7 +111,7 @@ export function VaultAdmin() {
           <div className="w-8 h-8 bg-neonPurple rounded-lg shadow-lg shadow-purple-500/50" />
           <span className="font-black text-white tracking-widest text-lg uppercase">OCFPVault</span>
         </div>
-        
+
         <nav className="flex flex-col gap-2">
           {tabs.map(tab => (
             <button
@@ -128,7 +140,7 @@ export function VaultAdmin() {
           </div>
           <div className="flex items-center gap-4">
             <div className={`px-4 py-2 rounded-xl border text-[10px] font-bold ${isPaused ? 'border-red-500/50 text-red-500' : 'border-emerald-500/50 text-emerald-500'}`}>
-               {isPaused ? '● PAUSED' : '● ACTIVE'}
+              {isPaused ? '● PAUSED' : '● ACTIVE'}
             </div>
           </div>
         </header>
@@ -141,7 +153,7 @@ export function VaultAdmin() {
               <div className="md:col-span-2 bg-white/5 border border-white/10 p-8 rounded-[2rem]">
                 <div className="flex justify-between items-center mb-6">
                   <h4 className="text-white font-bold">Security Status</h4>
-                  <button 
+                  <button
                     onClick={() => writeContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: isPaused ? 'unpause' : 'pause' })}
                     className={`px-6 py-2 rounded-xl font-bold text-xs ${isPaused ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}`}
                   >
@@ -149,8 +161,8 @@ export function VaultAdmin() {
                   </button>
                 </div>
                 <div className="space-y-3 opacity-60">
-                   <InfoRow label="VaultManager" value={VAULT_MANAGER_ADDRESS} />
-                   <InfoRow label="SavingCore" value={SAVING_CORE_ADDRESS} />
+                  <InfoRow label="VaultManager" value={VAULT_MANAGER_ADDRESS} />
+                  <InfoRow label="SavingCore" value={SAVING_CORE_ADDRESS} />
                 </div>
               </div>
             </div>
@@ -158,20 +170,20 @@ export function VaultAdmin() {
 
           {activeTab === 'finance' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FinanceBox 
-                title="Pump Liquidity" 
-                desc="Deposit USDC into the Vault to ensure interest payment capacity." 
-                value={fundAmount} 
-                onChange={setFundAmount} 
+              <FinanceBox
+                title="Pump Liquidity"
+                desc="Deposit USDC into the Vault to ensure interest payment capacity."
+                value={fundAmount}
+                onChange={setFundAmount}
                 onAction={() => writeContract({ address: USDC_ADDRESS, abi: USDC_ABI, functionName: 'transfer', args: [VAULT_MANAGER_ADDRESS, parseUnits(fundAmount, 6)] })}
                 btnText="Deposit Now"
                 theme="emerald"
               />
-              <FinanceBox 
-                title="Withdraw Surplus" 
-                desc="Withdraw funds from the Vault to Admin wallet (Max 90% balance)." 
-                value={withdrawAmount} 
-                onChange={setWithdrawAmount} 
+              <FinanceBox
+                title="Withdraw Surplus"
+                desc="Withdraw funds from the Vault to Admin wallet (Max 90% balance)."
+                value={withdrawAmount}
+                onChange={setWithdrawAmount}
                 onAction={() => writeContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'withdraw', args: [address, parseUnits(withdrawAmount, 6)] })}
                 btnText="Withdraw Now"
                 theme="purple"
@@ -196,7 +208,7 @@ export function VaultAdmin() {
                     <InputGroup label="Maximum (USDC)" value={planMax} onChange={setPlanMax} />
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={editingPlanId !== null ? handleUpdatePlan : () => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'createPlan', args: [Number(planTenor), Number(planApr) * 100, parseUnits(planMin, 6), parseUnits(planMax, 6), Number(planPenalty) * 100] })}
                   className={`w-full ${editingPlanId !== null ? 'bg-orange-600' : 'bg-neonBlue'} text-white py-5 rounded-3xl font-black text-sm tracking-[0.2em] shadow-2xl transition-all`}
                 >
@@ -216,14 +228,14 @@ export function VaultAdmin() {
                         <div className="flex gap-8 items-center">
                           <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center font-black text-white">#{id}</div>
                           <div>
-                            <p className="text-white font-bold">{data[0].toString()} Days - {Number(data[1])/100}% APR</p>
-                            <p className="text-[10px] text-gray-500">Min: {formatUnits(data[2], 6)} | Max: {formatUnits(data[3], 6)} | Penalty: {Number(data[4])/100}%</p>
+                            <p className="text-white font-bold">{data[0].toString()} Days - {Number(data[1]) / 100}% APR</p>
+                            <p className="text-[10px] text-gray-500">Min: {formatUnits(data[2], 6)} | Max: {formatUnits(data[3], 6)} | Penalty: {Number(data[4]) / 100}%</p>
                           </div>
                         </div>
                         <div className="flex gap-2">
                           <button onClick={() => handleStartEdit(id, data)} className="p-3 bg-white/5 hover:bg-white/20 rounded-xl text-gray-400 hover:text-white transition-all">Edit</button>
-                          <button 
-                            onClick={() => handleToggleStatus(id, data[5])} 
+                          <button
+                            onClick={() => handleToggleStatus(id, data[5])}
                             className={`px-4 py-3 rounded-xl text-[10px] font-bold transition-all ${data[5] ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30' : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'}`}
                           >
                             {data[5] ? 'Enabled' : 'Disabled'}
@@ -241,7 +253,7 @@ export function VaultAdmin() {
             <div className="space-y-6">
               {eligibleForAutoRenew.length === 0 ? (
                 <div className="p-20 text-center bg-black/20 rounded-[2.5rem] border border-dashed border-white/10">
-                   <p className="text-gray-500 italic">System clean. No saving books need processing.</p>
+                  <p className="text-gray-500 italic">System clean. No saving books need processing.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-4">
@@ -251,7 +263,7 @@ export function VaultAdmin() {
                         <p className="text-white font-bold text-lg">Saving Book #{id}</p>
                         <p className="text-xs text-gray-500 uppercase">Status: Grace period expired (Bot Trigger Required)</p>
                       </div>
-                      <button 
+                      <button
                         onClick={() => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'autoRenew', args: [id] })}
                         className="bg-orange-600 text-white px-8 py-3 rounded-2xl font-black text-xs transition-all hover:bg-orange-500"
                       >ACTIVATE BOT</button>

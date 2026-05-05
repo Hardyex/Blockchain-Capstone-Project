@@ -6,106 +6,71 @@
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-ff69b4?style=for-the-badge&logo=react" />
   <img src="https://img.shields.io/badge/Solidity-0.8.24-9b59b6?style=for-the-badge&logo=solidity" />
-  <img src="https://img.shields.io/badge/Hardhat-Project-ff69b4?style=for-the-badge&logo=hardhat" />
+  <img src="https://img.shields.io/badge/Hardhat-2.22.1-ff69b4?style=for-the-badge&logo=hardhat" />
   <img src="https://img.shields.io/badge/TailwindCSS-ff69b4?style=for-the-badge&logo=tailwind-css" />
   <img src="https://img.shields.io/badge/Vite-Project-ff69b4?style=for-the-badge&logo=vite" />
   <br />
   <img src="https://img.shields.io/badge/Coverage-100%25-ff69b4?style=flat-square" />
   <img src="https://img.shields.io/badge/Network-Sepolia-9b59b6?style=flat-square" />
   <img src="https://img.shields.io/badge/License-MIT-9b59b6?style=flat-square" />
-  <img src="https://img.shields.io/badge/RainbowKit-1-ff69b4?style=flat-square&logo=rainbowkit" />
-
+  <img src="https://img.shields.io/badge/RainbowKit-2-ff69b4?style=flat-square&logo=rainbowkit" />
 </p>
 
 ---
 
-## 🏗️ System Architecture
+## 🎯 Project Overview & Vision
 
-**OCFP** is a decentralized term-deposit protocol that transforms traditional savings into high-yield, liquid NFT assets. Built with a **Neon-Noir** aesthetic, it combines DeFi yield strategies with ERC721 certificate tokens.
+The **OCFP (One Capital - Four Profits)** protocol is a decentralized savings system that transforms traditional term-deposits into high-yield, liquid NFT assets. Built with a **Neon-Noir** aesthetic, it combines DeFi yield strategies with ERC721 certificate tokens to provide a transparent, automated alternative to centralized banking.
 
-The project is architected as a decoupled mono-repo:
-
-- **`/backend`**: Hardhat environment containing Solidity smart contracts, automated test suites, and deployment scripts for Sepolia/Mainnet.
-- **`/frontend`**: React 19 + Vite 8 application utilizing Wagmi 3 and RainbowKit for a seamless, type-safe Web3 user experience.
-
----
-
-## 🛠️ Tech Stack
-
-### ⚡ Smart Contracts (Blockchain)
-- **Solidity ^0.8.24**: Core logic with custom errors and optimized gas usage.
-- **OpenZeppelin**: Industry-standard implementations for `ERC20`, `ERC721`, and `Ownable` security.
-- **Hardhat**: Development framework for compilation, testing, and deployment.
-
-### 🎨 Application (Frontend)
-- **React 19**: Modern UI component architecture.
-- **Wagmi 3 & Viem 2**: Type-safe hooks for contract interaction and state management.
-- **RainbowKit 2**: Premium wallet connection management.
-- **TailwindCSS**: Powering the custom **Neon-Noir** design system.
+### 💡 Key Innovations
+- **NFT-based Certificates**: Every deposit is represented by a tradeable NFT, enabling liquidity even during lock-up periods.
+- **Treasury Isolation**: Dedicated `VaultManager` for interest payouts, ensuring user principal remains isolated and safe.
+- **Automated Compounding**: System-triggered auto-renewal for seamless interest reinvestment.
 
 ---
 
 ## 📂 Project Structure
 
+The project is organized as a unified monorepo to ensure tight integration between the blockchain logic and the user interface.
+
 ```text
 .
-├── backend/                # Hardhat Project
-│   ├── contracts/          # SavingCore, VaultManager, MockUSDC
-│   ├── scripts/            # Deployment & Local Demo scripts
-│   └── test/               # Comprehensive Test suite
-├── frontend/               # React Project
-│   ├── src/
-│   │   ├── abis/           # Synced Contract ABIs
-│   │   ├── components/     # UI Design System
-│   │   └── constants/      # Multi-network addresses
-│   └── public/             # Static Assets
-└── README.md               # Project Documentation (Root)
+├── smartcontract/          # Main Development Directory
+│   ├── contracts/          # Core Logic (SavingCore, VaultManager)
+│   ├── scripts/            # Deployment & Demo Automation
+│   ├── test/               # Technical Test Suite (>98% Coverage)
+│   └── frontend/           # React 19 DApp Interface
+│       ├── src/            # Application Logic & UI
+│       └── public/         # Static Assets
+├── PLAN.md                 # Roadmap & Execution Logs
+└── README.md               # Project Hub (This file)
 ```
 
----
-
-## 🔗 Smart Contract Summary
-
-1. **`SavingCore.sol`**: The engine of the protocol. Handles deposit logic, NFT minting, and interest calculation.
-2. **`VaultManager.sol`**: Manages the protocol's liquidity pool, fee structures, and administrative funding.
-3. **`MockUSDC.sol`**: An ERC20 test token used to simulate real-world value on testnets.
-
-### 🛡️ Quality Assurance (Testing)
-- **Unit Tests**: 100% coverage achieved for `SavingCore` and `VaultManager` logic.
-- **Security**: Architected using OpenZeppelin standards; strictly verified against Reentrancy and Overflow vulnerabilities.
+> [!NOTE]
+> For deep technical documentation regarding the smart contracts, security patterns, and execution flows, please refer to the [Smart Contract README](./smartcontract/README.md).
 
 ---
 
 ## 🚀 Quick Start (Local Development)
 
-### 1. Setup Backend
+### 1. Initialize Backend & Node
 ```bash
-# Navigate to backend directory
-cd backend
-
-# Install project dependencies
+cd smartcontract
 npm install
-
-# Start a local Hardhat node
 npx hardhat node
 ```
 
-### 2. Deploy & Seed Data (New Terminal)
+### 2. Deploy Local Environment
 ```bash
-# Deploy contracts and seed sample data to local node
-cd backend
+# In a new terminal
+cd smartcontract
 npx hardhat run scripts/demo_local.js --network localhost
 ```
 
-### 3. Setup Frontend
+### 3. Launch Frontend
 ```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install UI dependencies
+cd smartcontract/frontend
 npm install
-
-# Start the Vite development server
 npm run dev
 ```
 
@@ -113,46 +78,19 @@ npm run dev
 
 ## 🌐 Deployment (Sepolia Testnet)
 
-The system is currently deployed on the Sepolia Testnet.
-
-**Latest Contract Addresses (Chain ID: 11155111):**
+**Chain ID: 11155111**
 - **USDC**: `0xFd9d4200Cad64cC0798F9DD72bf1844597492935`
 - **VaultManager**: `0xB7927A43BE1e057CA1FC9b5CdF482C09A1b190DE`
 - **SavingCore**: `0xea99B62Cb18f7C16a690F1856A07E0AfF96352A1`
 
 ---
 
-## 🔄 User Flow (Demo)
-
-1. **Connect Wallet**: Use RainbowKit to connect your wallet (e.g., MetaMask).
-2. **Approve USDC**: The UI detects your allowance and prompts an `approve()` transaction.
-3. **Open Deposit**: Choose a plan (30, 90, 365 days) and deposit USDC.
-4. **Manage NFTs**: View your active deposits as dynamic cards. Monitor real-time interest accrual.
-5. **Withdraw/Renew**: At maturity, withdraw your principal + interest, or renew for another cycle.
-
-```mermaid
-graph TD
-  A[Connect Wallet] --> B[Approve USDC]
-  B --> C[Deposit - Mint NFT]
-  C --> D[Earn Interest]
-  D --> E[Withdraw / Renew]
-```
-
----
-
-## 🛡️ Edge Case Handling
-
-- **Insufficent Gas**: Proactive gas estimation prevents failed transactions.
-- **Network Switch**: Automatic detection and prompt to switch to the correct chain (Sepolia/Hardhat).
-- **User Rejection**: Graceful UI resets if the user cancels a signature in the wallet.
-
----
-
 ## 🔮 Future Roadmap
 
-- **Governance**: Implementation of a DAO for adjusting APR and Fee parameters.
-- **Secondary Market**: Native marketplace for trading matured NFT deposit certificates.
-- **Cross-Chain**: Integration with Layer 2s (Arbitrum/Optimism) for lower gas costs.
+- **Governance**: DAO for adjusting protocol parameters (APR, Fees).
+- **Secondary Market**: Native marketplace for matured NFT certificates.
+- **Cross-Chain**: Layer 2 deployments for reduced gas costs.
+- **Automation**: Integrating Chainlink Keepers for full decentralization.
 
 ---
 

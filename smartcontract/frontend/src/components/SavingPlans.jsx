@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useReadContract, useReadContracts, useChainId } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useReadContract, useReadContracts, useChainId, useBlockNumber } from 'wagmi';
 import { addresses, SAVING_CORE_ABI } from '../constants';
 import { formatUnits } from 'viem';
 
@@ -8,7 +8,7 @@ export function SavingPlans({ onSelectPlan }) {
   const { SAVING_CORE_ADDRESS } = addresses[chainId] || addresses[31337];
 
   // 1. Fetch nextPlanId
-  const { data: nextPlanId } = useReadContract({
+  const { data: nextPlanId, refetch: refetchNextPlan } = useReadContract({
     address: SAVING_CORE_ADDRESS,
     abi: SAVING_CORE_ABI,
     functionName: 'nextPlanId',
@@ -17,8 +17,8 @@ export function SavingPlans({ onSelectPlan }) {
   // 2. Multicall to fetch all Plans data
   const numPlans = Number(nextPlanId || 0);
   const planIds = Array.from({ length: numPlans }, (_, i) => i);
-  
-  const { data: plansData, isLoading } = useReadContracts({
+
+  const { data: plansData, isLoading, refetch: refetchPlans } = useReadContracts({
     contracts: planIds.map((id) => ({
       address: SAVING_CORE_ADDRESS,
       abi: SAVING_CORE_ABI,
@@ -26,6 +26,14 @@ export function SavingPlans({ onSelectPlan }) {
       args: [id],
     })),
   });
+
+  // 3. Tự động Refetch mỗi khi có Block mới
+  const { data: blockNumber } = useBlockNumber({ watch: true });
+
+  useEffect(() => {
+    refetchNextPlan();
+    refetchPlans();
+  }, [blockNumber]);
 
   if (isLoading) {
     return <div className="text-gray-400 animate-pulse text-center p-8">Syncing Saving Plans from Blockchain...</div>;
@@ -39,10 +47,10 @@ export function SavingPlans({ onSelectPlan }) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {plansData?.map((result, index) => {
         if (result.status !== 'success') return null;
-        
+
         // Map structure to SavingPlan struct: tenorDays, aprBps, minDeposit, maxDeposit, penaltyBps, enabled
         const [tenorDays, aprBps, minDeposit, maxDeposit, earlyWithdrawPenaltyBps, enabled] = result.result;
-        
+
         if (!enabled) return null;
 
         const apr = Number(aprBps) / 100;
@@ -60,7 +68,7 @@ export function SavingPlans({ onSelectPlan }) {
                   {apr}% APR
                 </span>
               </div>
-              
+
               <div className="space-y-2 text-sm text-gray-400 mb-6">
                 <div className="flex justify-between">
                   <span>Minimum deposit:</span>
@@ -77,7 +85,7 @@ export function SavingPlans({ onSelectPlan }) {
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => onSelectPlan(index, minDeposit)}
               className="w-full py-3 bg-white/5 border border-white/10 hover:border-neonBlue hover:bg-neonBlue/10 text-neonBlue font-semibold rounded-xl transition-all"
             >
