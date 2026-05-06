@@ -121,6 +121,11 @@ contract SavingCore is ERC721, Ownable {
             }
         }
         
+        console.log("--- RUT TIEN DUNG HAN ---");
+        console.log("Goc tra ve:", principal / 1e6, "USDC");
+        console.log("Lai nhan duoc:", interest / 1e6, "USDC");
+        console.log("Tong thuc nhan:", (principal + interest) / 1e6, "USDC");
+        
         emit Withdrawn(_depositId, msg.sender, principal + interest, interest);
     }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useReadContract, useReadContracts, useWriteContract, useAccount, useChainId, useBlockNumber } from 'wagmi';
+import { useReadContract, useReadContracts, useWriteContract, useAccount, useChainId, useBlockNumber, useWaitForTransactionReceipt } from 'wagmi';
 import { addresses, VAULT_MANAGER_ABI, USDC_ABI, SAVING_CORE_ABI } from '../constants';
 import { formatUnits, parseUnits } from 'viem';
 
@@ -23,6 +23,24 @@ export function VaultAdmin() {
   const [editingPlanId, setEditingPlanId] = useState(null);
 
   const { data: hash, writeContract } = useWriteContract();
+
+  // Track transaction status to clear inputs on success
+  const { isSuccess: isTxSuccess } = useWaitForTransactionReceipt({
+    hash,
+  });
+
+  useEffect(() => {
+    if (isTxSuccess) {
+      setFundAmount('');
+      setWithdrawAmount('');
+      setPlanTenor('');
+      setPlanApr('');
+      setPlanMin('');
+      setPlanMax('');
+      setPlanPenalty('');
+      setEditingPlanId(null);
+    }
+  }, [isTxSuccess]);
 
   // Data
   const { data: isPaused, refetch: refetchPaused } = useReadContract({ address: VAULT_MANAGER_ADDRESS, abi: VAULT_MANAGER_ABI, functionName: 'paused' });

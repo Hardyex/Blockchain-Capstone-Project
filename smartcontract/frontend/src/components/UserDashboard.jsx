@@ -1,7 +1,7 @@
 import { useAccount, useReadContract, useReadContracts, useWriteContract, useChainId, useBlockNumber } from 'wagmi';
 import { addresses, SAVING_CORE_ABI } from '../constants';
 import { formatUnits } from 'viem';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Utility for creating procedural gradients from seed (Token ID)
 const getGradient = (seed) => {
@@ -87,6 +87,14 @@ export function UserDashboard() {
 
   // 6. Tự động Refetch mỗi khi có Block mới
   const { data: blockNumber } = useBlockNumber({ watch: true });
+  const [currentTime, setCurrentTime] = useState(Math.floor(Date.now() / 1000));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(Math.floor(Date.now() / 1000));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     refetchNextId();
@@ -116,42 +124,48 @@ export function UserDashboard() {
             const [planId, principal, startAt, maturityAt, aprBpsAtOpen, penaltyBpsAtOpen, status] = deposit;
 
             const activeIndex = activeUserIds.indexOf(tokenId);
-            const interest = (activeIndex !== -1 ? interestData?.[activeIndex]?.result : 0n) ?? 0n;
-
-            const now = Math.floor(Date.now() / 1000);
-            const isMatured = now >= Number(maturityAt);
-            const inGracePeriod = isMatured && now <= Number(maturityAt) + 3 * 86400;
+            
+            // Calculate LIVE interest locally for smooth display (sync with 365-day contract logic)
+            const duration = currentTime > Number(startAt) ? BigInt(currentTime - Number(startAt)) : 0n;
+            const liveInterest = (BigInt(principal) * BigInt(aprBpsAtOpen) * duration) / (365n * 24n * 3600n * 10000n);
+            
+            const isMatured = currentTime >= Number(maturityAt);
+            const inGracePeriod = isMatured && currentTime <= Number(maturityAt) + 3 * 86400;
             const isWithdrawn = Number(status) === 1;
 
             return (
               <div key={tokenId} className="hover:-translate-y-1 transition-transform duration-300 rounded-2xl overflow-hidden shadow-xl border border-white/10 bg-darkSlate flex flex-col group">
                 {/* NFT Art Header */}
-                <div className="h-36 p-5 flex flex-col justify-between relative overflow-hidden" style={{ background: getGradient(tokenId) }}>
+                <div className="h-44 p-5 flex flex-col justify-between relative overflow-hidden" style={{ background: getGradient(tokenId) }}>
                   {/* Overlay sheen */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                   <div className="flex justify-between items-start relative z-10">
-                    <span className="bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-lg">
+                    <span className="bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-lg">
                       Book #{tokenId}
                     </span>
                     <StatusBadge deposit={deposit} />
                   </div>
-                  <div className="relative z-10">
-                    <div className="text-xs text-white/70 uppercase tracking-widest mb-1">Principal Balance</div>
-                    <div className="text-3xl font-black text-white/95 truncate drop-shadow-md">
-                      {formatUnits(principal, 6)} <span className="text-sm font-normal opacity-60">USDC</span>
-                    </div>
-                  </div>
-
-                  {/* Display Accrued Interest */}
-                  {!isWithdrawn && (
-                    <div className="absolute bottom-4 right-5 text-right z-10 animate-pulse">
-                      <div className="text-[10px] text-white/50 uppercase tracking-tighter">Accrued Interest (+{Number(aprBpsAtOpen) / 100}%)</div>
-                      <div className="text-lg font-bold text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
-                        +{formatUnits(interest, 6)} USDC
+                  
+                  {/* Bottom Area: Balance & Interest */}
+                  <div className="flex justify-between items-end relative z-10 gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] text-white/70 uppercase tracking-widest mb-1 truncate">Principal Balance</div>
+                      <div className="text-2xl sm:text-3xl font-black text-white/95 truncate drop-shadow-md">
+                        {formatUnits(principal, 6)} <span className="text-xs font-normal opacity-60">USDC</span>
                       </div>
                     </div>
-                  )}
+
+                    {/* Display Accrued Interest */}
+                    {!isWithdrawn && (
+                      <div className="text-right flex-shrink-0 animate-pulse pb-1">
+                        <div className="text-[9px] text-white/50 uppercase tracking-tighter">Accrued Profit (+{Number(aprBpsAtOpen) / 100}%)</div>
+                        <div className="text-lg sm:text-xl font-bold text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
+                          +{formatUnits(liveInterest, 6)}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Info Body */}
@@ -188,7 +202,7 @@ export function UserDashboard() {
                           onClick={() => writeContract({ address: SAVING_CORE_ADDRESS, abi: SAVING_CORE_ABI, functionName: 'manualRenew', args: [tokenId, planId] })}
                           disabled={isPending}
                           className="flex-1 py-2.5 bg-neonBlue/20 text-neonBlue hover:bg-neonBlue/30 rounded-xl text-sm font-bold transition shadow-[0_0_10px_rgba(0,210,255,0.1)] hover:shadow-[0_0_15px_rgba(0,210,255,0.3)] disabled:opacity-50"
-                        >🔄 Renew</button>
+                        >Renew</button>
                       )}
                     </>
                   )}
